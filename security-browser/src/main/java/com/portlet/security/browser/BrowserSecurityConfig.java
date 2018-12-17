@@ -1,5 +1,7 @@
 package com.portlet.security.browser;
 
+import com.portlet.security.browser.authentication.MyAuthenticationFailureHandler;
+import com.portlet.security.browser.authentication.MyAuthenticationSuccessHandler;
 import com.portlet.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -25,6 +33,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/authentication/require",
