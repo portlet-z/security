@@ -11,5 +11,5 @@ spring:
 portlet:
   security:
     browser:
-      loginType: REDIRECT
+      loginType: JSON
 #      loginPage: /demo-signIn.html
