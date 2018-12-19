@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc://mysql://127.0.0.1:3306/demo?userUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
     username: root
     password: zhang
 
@@ -15,6 +15,6 @@ portlet:
 #      loginPage: /demo-signIn.html
     code:
       image:
-        length: 6
-        width: 200
-        url: /user,/user/*
+        length: 3
+        width: 100
+#        url: /user,/user/*
