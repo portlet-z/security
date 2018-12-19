@@ -13,3 +13,8 @@ portlet:
     browser:
       loginType: JSON
 #      loginPage: /demo-signIn.html
+    code:
+      image:
+        length: 6
+        width: 200
+        url: /user,/user/*
