@@ -3,20 +3,21 @@ package com.portlet.security.core.validate.code;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-public class ImageCode {
-    private BufferedImage image;
+public class ValidateCode {
     private String code;
     private LocalDateTime expireTime;
 
-    public ImageCode(BufferedImage image, String code, int expireIn) {
-        this.image = image;
+    public ValidateCode(String code, int expireIn) {
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
+    }
+
+    public ValidateCode(String code, LocalDateTime expireIn) {
+        this.code = code;
+        this.expireTime = expireIn;
     }
 
     public boolean isExpired() {

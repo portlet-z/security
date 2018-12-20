@@ -1,13 +1,13 @@
 package com.portlet.security.core.validate.code;
 
 import com.portlet.security.core.properties.SecurityProperties;
+import com.portlet.security.core.validate.code.image.ImageCode;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -71,22 +71,22 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
 
     private void validate(ServletWebRequest request) throws ServletException{
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request, ValidateCodeController.SESSION_KEY);
-        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
-        if (StringUtils.isBlank(codeInRequest)) {
-            throw new ValidateCodeException("验证码的值不能为空");
-        }
-        if (codeInSession == null) {
-            throw new ValidateCodeException("验证码不存在");
-        }
-        if (codeInSession.isExpired()) {
-            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
-            throw new ValidateCodeException("验证码已过期");
-        }
-        if(!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-            throw new ValidateCodeException("验证码不匹配");
-        }
+//        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request, ValidateCodeController.SESSION_KEY);
+//        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
+//        if (StringUtils.isBlank(codeInRequest)) {
+//            throw new ValidateCodeException("验证码的值不能为空");
+//        }
+//        if (codeInSession == null) {
+//            throw new ValidateCodeException("验证码不存在");
+//        }
+//        if (codeInSession.isExpired()) {
+//            sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+//            throw new ValidateCodeException("验证码已过期");
+//        }
+//        if(!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
+//            throw new ValidateCodeException("验证码不匹配");
+//        }
 
-        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
+//        sessionStrategy.removeAttribute(request, ValidateCodeController.SESSION_KEY);
     }
 }

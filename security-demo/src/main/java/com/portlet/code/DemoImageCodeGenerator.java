@@ -1,8 +1,7 @@
 package com.portlet.code;
 
-import com.portlet.security.core.validate.code.ImageCode;
+import com.portlet.security.core.validate.code.image.ImageCode;
 import com.portlet.security.core.validate.code.ValidateCodeGenerator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
