@@ -13,6 +13,7 @@ portlet:
     browser:
       loginType: JSON
 #      loginPage: /demo-signIn.html
+      signUpUrl: /demo-signUp.html
     code:
       image:
         length: 3
