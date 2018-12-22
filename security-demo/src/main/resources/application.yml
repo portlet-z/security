@@ -22,3 +22,5 @@ portlet:
       qq:
         app-id:
         app-secret:
+        providerId: callBack.do
+      filterProcessesUrl: /qqLogin
