@@ -18,3 +18,7 @@ portlet:
         length: 3
         width: 100
         url: /user,/user/*
+    social:
+      qq:
+        app-id:
+        app-secret:
