@@ -17,4 +17,4 @@ portlet:
       image:
         length: 3
         width: 100
-#        url: /user,/user/*
+        url: /user,/user/*
