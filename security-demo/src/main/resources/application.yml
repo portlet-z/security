@@ -7,7 +7,8 @@ spring:
 
   session:
     store-type: none
-
+server:
+  port: 80
 portlet:
   security:
     browser:
@@ -25,3 +26,6 @@ portlet:
         app-secret:
         providerId: callBack.do
       filterProcessesUrl: /qqLogin
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4

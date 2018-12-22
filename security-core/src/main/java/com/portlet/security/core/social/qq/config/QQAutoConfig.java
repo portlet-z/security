@@ -1,4 +1,4 @@
-package com.portlet.security.core.social.config;
+package com.portlet.security.core.social.qq.config;
 
 import com.portlet.security.core.properties.QQProperties;
 import com.portlet.security.core.properties.SecurityProperties;
