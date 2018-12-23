@@ -1,7 +1,5 @@
 package com.portlet.security.browser;
 
-import com.portlet.security.browser.logout.PortletLogoutSuccessHandler;
-import com.portlet.security.browser.session.PortletExpiredSessionStrategy;
 import com.portlet.security.core.authentication.AbstractChannelSecurityConfig;
 import com.portlet.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.portlet.security.core.properties.SecurityConstants;
@@ -12,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
