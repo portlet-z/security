@@ -1,5 +1,6 @@
 package com.portlet.security.browser;
 
+import com.portlet.security.browser.session.PortletExpiredSessionStrategy;
 import com.portlet.security.core.authentication.AbstractChannelSecurityConfig;
 import com.portlet.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.portlet.security.core.properties.SecurityConstants;
@@ -68,6 +69,14 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
                 .and()
+            .sessionManagement()
+                .invalidSessionUrl(SecurityConstants.DEFAULT_SESSION_INVALID_URL)
+                .maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
+                //当 session 达到最大数量，阻止用户再登录
+                .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
+                .expiredSessionStrategy(new PortletExpiredSessionStrategy())
+                .and()
+                .and()
             .authorizeRequests()
                 .antMatchers(
                         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
@@ -75,7 +84,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         securityProperties.getBrowser().getLoginPage(),
                         SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                         securityProperties.getBrowser().getSignUpUrl(),
-                        "/user/register"
+                        "/user/register",
+                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()
                 ).permitAll()
                 .anyRequest()
                 .authenticated()
