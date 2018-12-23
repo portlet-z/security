@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class BrowserProperties {
     private String signUpUrl = "signUp.html";
+    private String signOutUrl;
     private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
     private LoginType loginType = LoginType.JSON;
     private int rememberMeSeconds = 3600;

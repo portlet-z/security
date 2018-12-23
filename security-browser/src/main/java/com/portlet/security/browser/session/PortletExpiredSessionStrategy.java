@@ -10,10 +10,20 @@ import java.io.IOException;
  * @author zhangxinzheng
  * @date 2018-12-22
  */
-public class PortletExpiredSessionStrategy implements SessionInformationExpiredStrategy {
+public class PortletExpiredSessionStrategy extends AbstractSessionStrategy implements SessionInformationExpiredStrategy {
+
+    public PortletExpiredSessionStrategy(String invalidSessionUrl) {
+        super(invalidSessionUrl);
+    }
+
     @Override
     public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException, ServletException {
-        event.getResponse().setContentType("application/json;charset=UTF-8");
-        event.getResponse().getWriter().write("并发登录！");
+        onSessionInvalid(event.getRequest(), event.getResponse());
     }
+
+    @Override
+    protected boolean isConcurrency() {
+        return true;
+    }
+
 }

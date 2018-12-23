@@ -16,6 +16,7 @@ portlet:
       loginType: JSON
 #      loginPage: /demo-signIn.html
       signUpUrl: /demo-signUp.html
+      signOutUrl: /demo-logout.html
     code:
       image:
         length: 3

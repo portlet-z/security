@@ -1,5 +1,6 @@
 package com.portlet.security.browser;
 
+import com.portlet.security.browser.logout.PortletLogoutSuccessHandler;
 import com.portlet.security.browser.session.PortletExpiredSessionStrategy;
 import com.portlet.security.core.authentication.AbstractChannelSecurityConfig;
 import com.portlet.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
@@ -13,8 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
@@ -39,6 +43,15 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
     private SpringSocialConfigurer portletSocialConfigurer;
+
+    @Autowired
+    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+
+    @Autowired
+    private InvalidSessionStrategy invalidSessionStrategy;
+
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -70,12 +83,17 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .userDetailsService(userDetailsService)
                 .and()
             .sessionManagement()
-                .invalidSessionUrl(SecurityConstants.DEFAULT_SESSION_INVALID_URL)
+                .invalidSessionStrategy(invalidSessionStrategy)
                 .maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
                 //当 session 达到最大数量，阻止用户再登录
                 .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
-                .expiredSessionStrategy(new PortletExpiredSessionStrategy())
+                .expiredSessionStrategy(sessionInformationExpiredStrategy)
                 .and()
+                .and()
+            .logout()
+                .logoutUrl("/signOut")
+//                .logoutSuccessUrl("/logout.html")
+                .logoutSuccessHandler(logoutSuccessHandler)
                 .and()
             .authorizeRequests()
                 .antMatchers(
@@ -84,6 +102,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                         securityProperties.getBrowser().getLoginPage(),
                         SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                         securityProperties.getBrowser().getSignUpUrl(),
+                        securityProperties.getBrowser().getSignOutUrl(),
                         "/user/register",
                         securityProperties.getBrowser().getSession().getSessionInvalidUrl()
                 ).permitAll()
