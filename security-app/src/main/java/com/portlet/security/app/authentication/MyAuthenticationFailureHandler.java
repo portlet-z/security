@@ -1,4 +1,4 @@
-package com.portlet.security.browser.authentication;
+package com.portlet.security.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portlet.security.core.support.SimpleResponse;

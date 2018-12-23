@@ -1,6 +1,6 @@
 package com.portlet.security.browser;
 
-import com.portlet.security.browser.support.SimpleResponse;
+import com.portlet.security.core.support.SimpleResponse;
 import com.portlet.security.browser.support.SocialUserInfo;
 import com.portlet.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;

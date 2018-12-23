@@ -8,8 +8,15 @@ spring:
   session:
     store-type: redis
     timeout: 600
+security:
+  oauth2:
+    client:
+      clientId: portlet
+      clientSecret: portletSecret
+
 server:
   port: 8080
+
 portlet:
   security:
     browser:
