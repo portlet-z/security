@@ -56,7 +56,7 @@ public class PortletResourceServerConfig extends ResourceServerConfigurerAdapter
                         SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                         securityProperties.getBrowser().getSignUpUrl(),
                         securityProperties.getBrowser().getSignOutUrl(),
-                        "/user/register",
+                        "/user/register","/social/signUp",
                         securityProperties.getBrowser().getSession().getSessionInvalidUrl()
                 ).permitAll()
                 .anyRequest()

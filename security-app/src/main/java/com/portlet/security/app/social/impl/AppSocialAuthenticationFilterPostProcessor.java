@@ -15,11 +15,11 @@ import com.portlet.security.core.social.SocialAuthenticationFilterPostProcessor;
 public class AppSocialAuthenticationFilterPostProcessor implements SocialAuthenticationFilterPostProcessor {
 	
 	@Autowired
-	private AuthenticationSuccessHandler imoocAuthenticationSuccessHandler;
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
 
 	@Override
 	public void process(SocialAuthenticationFilter socialAuthenticationFilter) {
-		socialAuthenticationFilter.setAuthenticationSuccessHandler(imoocAuthenticationSuccessHandler);
+		socialAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
 	}
 
 }

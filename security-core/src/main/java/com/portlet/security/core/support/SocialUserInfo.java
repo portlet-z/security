@@ -1,4 +1,4 @@
-package com.portlet.security.browser.support;
+package com.portlet.security.core.support;
 
 import lombok.Data;
 

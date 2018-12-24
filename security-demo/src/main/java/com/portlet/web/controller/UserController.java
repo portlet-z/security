@@ -2,6 +2,7 @@ package com.portlet.web.controller;
 
 import com.portlet.dto.User;
 import com.portlet.dto.UserQueryCondition;
+import com.portlet.security.app.social.impl.AppSignUpUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
+
+    @Autowired
+    private AppSignUpUtils appSignUpUtils;
 
     @GetMapping
     public List<User> user(UserQueryCondition condition,@PageableDefault Pageable pageable) {
@@ -47,6 +51,7 @@ public class UserController {
         //注册用户
         //不管是注册用户还是绑定用户，都会拿到一个用户唯一标识
         String userId = user.getUsername();
-        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+        //providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
     }
 }
