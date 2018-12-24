@@ -8,11 +8,11 @@ spring:
   session:
     store-type: redis
     timeout: 600
-security:
-  oauth2:
-    client:
-      clientId: portlet
-      clientSecret: portletSecret
+#security:
+#  oauth2:
+#    client:
+#      clientId: portlet
+#      clientSecret: portletSecret
 
 server:
   port: 8080
@@ -38,3 +38,10 @@ portlet:
       weixin:
         app-id: wxd99431bbff8305a0
         app-secret: 60f78681d063590a469f1b297feff3c4
+    oauth2:
+      clients[0]:
+        clientId: portlet
+        clientSecret: portletSecret
+      clients[1]:
+        clientId: test
+        clientSecret: test
