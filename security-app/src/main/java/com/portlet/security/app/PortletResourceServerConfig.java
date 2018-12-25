@@ -1,6 +1,7 @@
 package com.portlet.security.app;
 
 import com.portlet.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.portlet.security.core.authorize.AuthorizeConfigManager;
 import com.portlet.security.core.properties.SecurityConstants;
 import com.portlet.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class PortletResourceServerConfig extends ResourceServerConfigurerAdapter
     @Autowired
     private SpringSocialConfigurer portletSocialConfigurer;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.formLogin()
@@ -49,19 +53,11 @@ public class PortletResourceServerConfig extends ResourceServerConfigurerAdapter
                 .apply(portletSocialConfigurer)
                 .and()
                 .authorizeRequests()
-                .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
-                        securityProperties.getBrowser().getSignUpUrl(),
-                        securityProperties.getBrowser().getSignOutUrl(),
-                        "/user/register","/social/signUp",
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()
-                ).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 }

@@ -2,6 +2,7 @@ package com.portlet.security.browser;
 
 import com.portlet.security.core.authentication.AbstractChannelSecurityConfig;
 import com.portlet.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.portlet.security.core.authorize.AuthorizeConfigManager;
 import com.portlet.security.core.properties.SecurityConstants;
 import com.portlet.security.core.properties.SecurityProperties;
 import com.portlet.security.core.validate.code.ValidateCodeSecurityConfig;
@@ -49,6 +50,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
@@ -87,19 +91,11 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .and()
             .authorizeRequests()
-                .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
-                        securityProperties.getBrowser().getSignUpUrl(),
-                        securityProperties.getBrowser().getSignOutUrl(),
-                        "/user/register",
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()
-                ).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
             .csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 }
